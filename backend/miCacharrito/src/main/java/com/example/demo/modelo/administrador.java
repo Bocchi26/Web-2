@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="administrador")
-public class administrador {
+public class Administrador {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,12 +22,12 @@ public class administrador {
 	@Column(name="password_administrador", nullable=false)
 	private String password_administrador;
 
-	public administrador() {
+	public Administrador() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public administrador(String usuario, String password_administrador) {
+	public Administrador(String usuario, String password_administrador) {
 		super();
 		this.usuario = usuario;
 		this.password_administrador = password_administrador;
@@ -37,7 +37,6 @@ public class administrador {
 		return id_administrador;
 	}
 
-	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -53,8 +52,7 @@ public class administrador {
 	public void setPassword_administrador(String password_administrador) {
 		this.password_administrador = password_administrador;
 	}
-	
-	
-	
 
+	
+	
 }

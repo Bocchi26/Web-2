@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="alquiler")
-public class solicitud_alquiler {
+public class SolicitudAlquiler {
 	
 	
 	@Id
@@ -23,15 +23,15 @@ public class solicitud_alquiler {
 	
 	@ManyToOne()
 	@JoinColumn(name= "identificacion", referencedColumnName="identificacion", nullable=false)
-	private usuario id_usuario;
+	private Usuario id_usuario;
 	
 	@ManyToOne()
 	@JoinColumn(name="placa", referencedColumnName="placa", nullable=false)
-	private vehiculo id_placa;
+	private Vehiculo id_placa;
 	
 	@ManyToOne()
 	@JoinColumn(name="id_administrador", referencedColumnName="id_administrador", nullable=false)
-	private administrador id_administrador;
+	private Administrador id_administrador;
 	
 	@Column(name="fecha_inicio", nullable=false)
 	private Date fecha_inicio;
@@ -51,12 +51,12 @@ public class solicitud_alquiler {
 	@Column(name="estado_alquiler")
 	private String estado_alquiler;
 
-	public solicitud_alquiler() {
+	public SolicitudAlquiler() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public solicitud_alquiler(usuario id_usuario, vehiculo id_placa, administrador id_administrador, Date fecha_inicio,
+	public SolicitudAlquiler(Usuario id_usuario, Vehiculo id_placa, Administrador id_administrador, Date fecha_inicio,
 			Date fecha_fin, Date fecha_devolucion, int valor, int valor_extra, String estado_alquiler) {
 		super();
 		this.id_usuario = id_usuario;
@@ -74,28 +74,27 @@ public class solicitud_alquiler {
 		return numero_alquiler;
 	}
 
-
-	public usuario getId_usuario() {
+	public Usuario getId_usuario() {
 		return id_usuario;
 	}
 
-	public void setId_usuario(usuario id_usuario) {
+	public void setId_usuario(Usuario id_usuario) {
 		this.id_usuario = id_usuario;
 	}
 
-	public vehiculo getId_placa() {
+	public Vehiculo getId_placa() {
 		return id_placa;
 	}
 
-	public void setId_placa(vehiculo id_placa) {
+	public void setId_placa(Vehiculo id_placa) {
 		this.id_placa = id_placa;
 	}
 
-	public administrador getId_administrador() {
+	public Administrador getId_administrador() {
 		return id_administrador;
 	}
 
-	public void setId_administrador(administrador id_administrador) {
+	public void setId_administrador(Administrador id_administrador) {
 		this.id_administrador = id_administrador;
 	}
 
@@ -149,11 +148,4 @@ public class solicitud_alquiler {
 	
 	
 	
-	
-	
-	
-	
-	
-
-
 }

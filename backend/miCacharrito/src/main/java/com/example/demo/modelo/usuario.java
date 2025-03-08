@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public class usuario {
+public class Usuario {
 	
 	@Id
 	@Column(name="identificacion", unique=true)
@@ -36,12 +36,12 @@ public class usuario {
 	@Column(name="password")
 	private String password;
 
-	public usuario() {
+	public Usuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoría,
+	public Usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoría,
 			int vigencia, String correo_electronico, int telefono, String password) {
 		super();
 		this.identificacion = identificacion;
@@ -119,13 +119,4 @@ public class usuario {
 	}
 	
 	
-	
-	
-	
-	
-	
-
-	
-	
-
 }

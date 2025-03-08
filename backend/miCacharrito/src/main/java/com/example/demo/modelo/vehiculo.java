@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="vehiculo")
-public class vehiculo {
+public class Vehiculo {
 	
 	@Id
 	@Column(name="placa", unique=true, nullable=false, length=6)
@@ -18,19 +18,17 @@ public class vehiculo {
 	
 	@Column(name="color")
 	private String color;
-	
 
-	public vehiculo() {
+	public Vehiculo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public vehiculo(String placa, String tipo, String color, String estado) {
+	public Vehiculo(String placa, String tipo, String color) {
 		super();
 		this.placa = placa;
 		this.tipo = tipo;
 		this.color = color;
-		
 	}
 
 	public String getPlaca() {
@@ -56,10 +54,8 @@ public class vehiculo {
 	public void setColor(String color) {
 		this.color = color;
 	}
-
-	
-	
-	
 	
 
+	
+	
 }
