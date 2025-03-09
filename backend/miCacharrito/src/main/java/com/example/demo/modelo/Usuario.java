@@ -2,6 +2,8 @@ package com.example.demo.modelo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,11 +20,12 @@ public class Usuario {
 	@Column(name="nombre_completo")
 	private String nombre_completo;
 	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	@Column(name="fecha_expedicion_licencia")
 	private Date fecha_expedicion_licencia;
 	
-	@Column(name="categoría")
-	private String categoría;
+	@Column(name="categoria")
+	private String categoria;
 	
 	@Column(name="vigencia")
 	private int vigencia;
@@ -41,13 +44,13 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoría,
+	public Usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoria,
 			int vigencia, String correo_electronico, int telefono, String password) {
 		super();
 		this.identificacion = identificacion;
 		this.nombre_completo = nombre_completo;
 		this.fecha_expedicion_licencia = fecha_expedicion_licencia;
-		this.categoría = categoría;
+		this.categoria = categoria;
 		this.vigencia = vigencia;
 		this.correo_electronico = correo_electronico;
 		this.telefono = telefono;
@@ -79,11 +82,11 @@ public class Usuario {
 	}
 
 	public String getCategoría() {
-		return categoría;
+		return categoria;
 	}
 
 	public void setCategoría(String categoría) {
-		this.categoría = categoría;
+		this.categoria = categoría;
 	}
 
 	public int getVigencia() {
