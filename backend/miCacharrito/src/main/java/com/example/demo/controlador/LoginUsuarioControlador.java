@@ -1,5 +1,5 @@
 package com.example.demo.controlador;
 
-public class UsuarioAdministrador {
+public class LoginUsuarioControlador {
 
 }
