@@ -2,7 +2,7 @@ package com.example.demo.modelo;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class Usuario {
 	@Column(name="nombre_completo")
 	private String nombre_completo;
 	
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_expedicion_licencia")
 	private Date fecha_expedicion_licencia;
 	
@@ -34,7 +34,7 @@ public class Usuario {
 	private String correo_electronico;
 	
 	@Column(name="telefono")
-	private int telefono;
+	private long telefono;
 	
 	@Column(name="password")
 	private String password;
@@ -45,7 +45,7 @@ public class Usuario {
 	}
 
 	public Usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoria,
-			int vigencia, String correo_electronico, int telefono, String password) {
+			int vigencia, String correo_electronico, long telefono, String password) {
 		super();
 		this.identificacion = identificacion;
 		this.nombre_completo = nombre_completo;
@@ -81,12 +81,12 @@ public class Usuario {
 		this.fecha_expedicion_licencia = fecha_expedicion_licencia;
 	}
 
-	public String getCategoría() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoría(String categoría) {
-		this.categoria = categoría;
+	public void setCategoría(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public int getVigencia() {
@@ -105,11 +105,11 @@ public class Usuario {
 		this.correo_electronico = correo_electronico;
 	}
 
-	public int getTelefono() {
+	public long getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(long	 telefono) {
 		this.telefono = telefono;
 	}
 
