@@ -1,1 +1,51 @@
-<p>registro works!</p>
+<p>esto es para revisar todo</p>
+<div class="container mt-4">
+    <h1 class="text-center">Registro de Usuario</h1>
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow">
+      
+      <div class="mb-3">
+        <label for="identificacion" class="form-label">Identificación:</label>
+        <input id="identificacion" formControlName="identificacion" type="text" class="form-control">
+      </div>
+  
+      <div class="mb-3">
+        <label for="nombre_c" class="form-label">Nombre Completo:</label>
+        <input id="nombre_c" formControlName="nombre_completo" type="text" class="form-control">
+      </div>
+  
+      <div class="mb-3">
+        <label for="fecha_expedicion_l" class="form-label">Fecha de Expedición:</label>
+        <input id="fecha_expedicion_l" formControlName="fecha_expedicion_licencia" type="date" class="form-control">
+      </div>
+  
+      <div class="mb-3">
+        <label for="categoria" class="form-label">Categoría:</label>
+        <input id="categoria" formControlName="categoria" type="text" class="form-control">
+      </div>
+      
+      <div class="mb-3">
+        <label for="vigencia" class="form-label">Vigencia (años):</label>
+        <input id="vigencia" formControlName="vigencia" type="number" class="form-control">
+      </div>
+  
+      <div class="mb-3">
+        <label for="correo_e" class="form-label">Correo Electrónico:</label>
+        <input id="correo_e" formControlName="correo_electronico" type="email" class="form-control">
+      </div>
+  
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono:</label>
+        <input id="telefono" formControlName="telefono" type="text" class="form-control">
+        <small class="text-muted">Debe contener 10 dígitos.</small>
+      </div>
+  
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input id="password" formControlName="password" type="password" class="form-control">
+        <small class="text-muted">Mínimo 6 caracteres.</small>
+      </div>
+  
+      <button type="submit" class="btn btn-primary w-100">Registrar</button>
+    </form>
+  </div>
+  

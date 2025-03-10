@@ -1,38 +1,51 @@
-import { Usuario } from './../../../../entidades/usuario';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../../servicios/usuario.service';
-
+import {  HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, HttpClientModule],
+  providers: [UsuarioService], 
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
-export class RegistroComponent {
-  registroForm: FormGroup;
+export class RegistroComponent implements OnInit{
+  registroForm: FormGroup; 
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) { }
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
-    this.registroForm = this.fb.group({
+  ngOnInit(): void {
+    this.registroForm = this.fb.group({ 
       identificacion: ['', Validators.required],
-      nombre_c: ['', Validators.required],
-      fecha_expedicion_l: ['', Validators.required],
+      nombre_completo: ['', Validators.required],  //  Coincide con el backend
+      fecha_expedicion_licencia: ['', Validators.required],  //  Coincide con el backend
       categoria: ['', Validators.required],
-      vigencia: ['', Validators.required],
-      correo_e: ['', [Validators.required, Validators.email]],
-      telefono: ['', Validators.required],
-      password: ['', Validators.required]
+      vigencia: ['', [Validators.required, Validators.min(1)]],
+      correo_electronico: ['', [Validators.required, Validators.email]],  //  Coincide con el backend
+      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    
   }
-
   onSubmit() {
     if (this.registroForm.valid) {
-      const nuevoUsuario: Usuario = this.registroForm.value;
-      this.usuarioService.registrarUsuario(nuevoUsuario).subscribe(response => {
-        console.log('Usuario registrado:', response);
-      });
+      console.log('📌 Datos enviados:', this.registroForm.value);  // Debug
+  
+      this.usuarioService.registrarUsuario(this.registroForm.value)
+        .subscribe({
+          next: (response) => {
+            console.log('✅ Usuario registrado:', response);
+            alert('Registro exitoso');
+            this.registroForm.reset();
+          },
+          error: (error) => {
+            console.error('❌ Error en el registro:', error);
+            alert('Hubo un error en el registro');
+          }
+        });
+    } else {
+      alert('Por favor, completa todos los campos correctamente.');
     }
   }
-
+  
 }
