@@ -40,7 +40,7 @@ export class RegistroComponent implements OnInit{
           },
           error: (error) => {
             console.error('❌ Error en el registro:', error);
-            alert('Hubo un error en el registro');
+            alert('Hubo un error en el registro, su email ya esta registrado');
           }
         });
     } else {
