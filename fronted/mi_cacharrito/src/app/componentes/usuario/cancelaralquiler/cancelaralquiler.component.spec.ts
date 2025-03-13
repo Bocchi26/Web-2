@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavAdminComponent } from './nav-admin.component';
+import { CancelaralquilerComponent } from './cancelaralquiler.component';
 
-describe('NavAdminComponent', () => {
-  let component: NavAdminComponent;
-  let fixture: ComponentFixture<NavAdminComponent>;
+describe('CancelaralquilerComponent', () => {
+  let component: CancelaralquilerComponent;
+  let fixture: ComponentFixture<CancelaralquilerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavAdminComponent]
+      imports: [CancelaralquilerComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NavAdminComponent);
+    fixture = TestBed.createComponent(CancelaralquilerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
