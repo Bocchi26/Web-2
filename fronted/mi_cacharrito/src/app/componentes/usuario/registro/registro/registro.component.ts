@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../../servicios/usuario.service';
 import {  HttpClientModule } from '@angular/common/http';
@@ -11,6 +11,7 @@ import {  HttpClientModule } from '@angular/common/http';
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent implements OnInit{
+  @Output() registroCompletado = new EventEmitter<void>();
   registroForm: FormGroup; 
   constructor(private fb: FormBuilder, private usuarioService: UsuarioService) { }
 
@@ -36,6 +37,7 @@ export class RegistroComponent implements OnInit{
           next: (response) => {
             console.log('✅ Usuario registrado:', response);
             alert('Registro exitoso');
+            this.registroCompletado.emit();
             this.registroForm.reset();
           },
           error: (error) => {
