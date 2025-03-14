@@ -1,25 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router ,RouterOutlet } from '@angular/router';
+import { AuthService } from '../../servicios/rol/auth.service';
 
 @Component({
   selector: 'app-nav-principal',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, ],
   templateUrl: './nav-principal.component.html',
   styleUrl: './nav-principal.component.css'
 })
-export class NavPrincipalComponent {
+export class NavPrincipalComponent implements OnInit {
     rolActual: string = 'inicio'; // Estado inicial
 
-    constructor(private router: Router) {}
-
+    constructor(private router: Router,  private authService: AuthService) {}
+    ngOnInit() {
+      this.authService.rol$.subscribe(rol => {
+        this.rolActual = rol;
+      });
+    }
     seleccionarUsuario() {
       this.rolActual = 'usuario-no-logueado'; // Cambia al estado de usuario no logueado
     }
 
     seleccionarAdministrador() {
-      this.rolActual = 'admin-no-logueado'; // Cambia al estado de administrador no logueado
+      this.rolActual = 'admin-no-logueado';
+      this.mostrarLoginAdministrador(); // Cambia al estado de administrador no logueado
     }
 
     mostrarRegistro() {
@@ -45,8 +51,14 @@ export class NavPrincipalComponent {
     }
 
     cerrarSesion() {
-      this.rolActual = 'inicio'; // Vuelve al estado inicial
-      this.router.navigate(['/']); // Redirige al inicio
+       
+      this.authService.cerrarSesion(); // Cambia el estado al inicial
+  console.log('Redirigiendo a la raíz...');
+  this.router.navigate(['/']).then(() => {
+    console.log('Redirección completada.');
+  }).catch((error) => {
+    console.error('Error en la redirección:', error);
+  }); // Ahora usa el método centralizado// Redirige a la página de inicio
     }
 
     irAlquiler() {

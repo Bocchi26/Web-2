@@ -2,6 +2,9 @@ import { LoginusuarioService } from './../../servicios/loginusuario.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../servicios/rol/auth.service';
+
 
 @Component({
   selector: 'app-loginusuario',
@@ -15,7 +18,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class LoginusuarioComponent implements OnInit {
 @Output() loginExitoso = new EventEmitter<void>();
 IniciodeSesionForm: FormGroup<any>;
-constructor(private fb: FormBuilder, private loginusuarioService: LoginusuarioService ) { }
+constructor(private fb: FormBuilder, private loginusuarioService: LoginusuarioService, private router: Router, private authService: AuthService ) { }
 
 
 ngOnInit(): void {
@@ -39,7 +42,8 @@ onSubmit() {
       next: (response) => {
         console.log('✅ Inicio de sesión exitoso:', response);
         alert('Inicio de sesión exitoso');
-        this.loginExitoso.emit();
+        this.authService.actualizarRol('usuario-logueado'); // ✅ Actualizar rol en el servicio
+        this.router.navigate(['/alquiler']);
 
       },
       error: (error) => {
