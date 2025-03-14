@@ -1,1 +1,20 @@
 <p>loginadministrador works!</p>
+
+<div class="container mt-4">
+    <h1 class="text-center">Inicio de Sesión</h1>
+    <form [formGroup]="IniciodeSesionAdminForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow">
+      
+      <div class="mb-3">
+        <label for="usuario" class="form-label">Usuario:</label>
+        <input id="usuario" formControlName="usuario" type="text" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="password_administrador" class="form-label">Contraseña:</label>
+        <input id="password_administrador" formControlName="password_administrador" type="password" class="form-control">
+        <small class="text-muted">Mínimo 6 caracteres.</small>
+      </div>
+  
+      <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+    </form>
+  </div>

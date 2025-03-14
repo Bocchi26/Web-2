@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginusuarioService {
 
-  private URL = "http://localhost:8080/ver/usuario";
+  private URL = "http://localhost:8080/ver/loginusuario";
 
   constructor(private httpclient: HttpClient
   ) { }
