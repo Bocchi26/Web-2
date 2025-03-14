@@ -1,12 +1,63 @@
-import { Component } from '@angular/core';
+import { LoginusuarioService } from './../../servicios/loginusuario.service';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../servicios/rol/auth.service';
+
 
 @Component({
   selector: 'app-loginusuario',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, HttpClientModule],
+  providers: [LoginusuarioService],
   templateUrl: './loginusuario.component.html',
   styleUrl: './loginusuario.component.css'
 })
-export class LoginusuarioComponent {
+
+export class LoginusuarioComponent implements OnInit {
+@Output() loginExitoso = new EventEmitter<void>();
+IniciodeSesionForm: FormGroup<any>;
+constructor(private fb: FormBuilder, private loginusuarioService: LoginusuarioService, private router: Router, private authService: AuthService ) { }
+
+
+ngOnInit(): void {
+    this.IniciodeSesionForm = this.fb.group({ 
+      identificacion: ['', Validators.required],  //Esto es basicamente para lo que se vaya a ingresar no esé vacío
+      password: ['', [Validators.required, Validators.minLength(6)]] //  Coincide con el backend
+    });
+}
+
+
+onSubmit() {
+  if(this.IniciodeSesionForm.valid){
+    
+    const identificacion = this.IniciodeSesionForm.value.identificacion.toString(); // Convertir a String
+    const password = this.IniciodeSesionForm.value.password;
+
+    console.log('📌 Intentando iniciar sesión con:', this.IniciodeSesionForm.value);
+
+    this.loginusuarioService.loginUsuario(identificacion, password).subscribe({
+
+      next: (response) => {
+        console.log('✅ Inicio de sesión exitoso:', response);
+        alert('Inicio de sesión exitoso');
+        this.authService.actualizarRol('usuario-logueado'); // ✅ Actualizar rol en el servicio
+        this.router.navigate(['/alquiler']);
+
+      },
+      error: (error) => {
+        console.error('❌ Error en el inicio de sesión:', error);
+        alert('Credenciales incorrectas o usuario no registrado');
+      }
+    });  
+  } else {
+    alert('Por favor, ingresa tus credenciales correctamente.');
+  }
+
+}
+
+
+
 
 }

@@ -24,8 +24,7 @@ export class RegistroComponent implements OnInit{
       correo_electronico: ['', [Validators.required, Validators.email]],  //  Coincide con el backend
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-    
+    });  
   }
   onSubmit() {
     if (this.registroForm.valid) {
