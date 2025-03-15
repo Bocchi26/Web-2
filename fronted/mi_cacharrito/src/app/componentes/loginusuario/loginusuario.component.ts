@@ -1,9 +1,9 @@
 import { LoginusuarioService } from './../../servicios/loginusuario.service';
-import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../servicios/rol/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -30,31 +30,35 @@ ngOnInit(): void {
 
 
 onSubmit() {
-  if(this.IniciodeSesionForm.valid){
-    
-    const identificacion = this.IniciodeSesionForm.value.identificacion.toString(); // Convertir a String
+  if (this.IniciodeSesionForm.valid) {
+    const identificacion = this.IniciodeSesionForm.value.identificacion.toString();
     const password = this.IniciodeSesionForm.value.password;
 
     console.log('📌 Intentando iniciar sesión con:', this.IniciodeSesionForm.value);
 
     this.loginusuarioService.loginUsuario(identificacion, password).subscribe({
-
       next: (response) => {
-        console.log('✅ Inicio de sesión exitoso:', response);
-        alert('Inicio de sesión exitoso');
-        this.authService.actualizarRol('usuario-logueado'); // ✅ Actualizar rol en el servicio
-        this.router.navigate(['/alquiler']);
+        console.log('🔍 Respuesta del servidor:', response);
 
+        if (response === true) {  // ✅ Verificar si la respuesta es `true`
+          console.log('✅ Inicio de sesión exitoso');
+          alert('Inicio de sesión exitoso');
+          this.authService.actualizarRol('usuario-logueado'); // ✅ Guarda el rol
+          this.authService.guardarUsuario(identificacion); // ✅ Guarda la identificación
+          this.router.navigate(['/alquiler']);
+        } else {
+          console.warn('⚠️ Credenciales incorrectas');
+          alert('Credenciales incorrectas o usuario no registrado');
+        }
       },
       error: (error) => {
         console.error('❌ Error en el inicio de sesión:', error);
-        alert('Credenciales incorrectas o usuario no registrado');
+        alert('Ocurrió un error en el servidor. Inténtalo de nuevo.');
       }
-    });  
+    });
   } else {
     alert('Por favor, ingresa tus credenciales correctamente.');
   }
-
 }
 
 

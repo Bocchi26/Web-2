@@ -1,9 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Vehiculo } from '../entidades/vehiculo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculoService {
+    private URL = "http://localhost:8080/ver/vehiculo/disponibles";
+  constructor(
+    private httpclient : HttpClient)
+     { }
 
-  constructor() { }
+  obtenerVehiculosDisponibles(tipo : string): Observable<Vehiculo[]> {
+    return this.httpclient.post<Vehiculo[]>(`${this.URL}?tipo=${tipo}`, {});	
+  }
+
 }

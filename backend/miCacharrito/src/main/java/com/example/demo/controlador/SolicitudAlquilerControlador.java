@@ -5,8 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,37 +38,58 @@ public class SolicitudAlquilerControlador {
 	@Autowired
 	public AdministradorRepositorio repositorioA;
 	
-	@GetMapping("/guardarS")
-	public String guardarsolicitud() {
-		Usuario usuario = repositorioU.findById((long) 76567898).orElse(null);
-		Vehiculo vehiculo = repositorioV.findById((String) "ABD123").orElse(null);
-		Administrador admin = repositorioA.findById((long) 1).orElse(null);
-		
-		if(usuario == null && vehiculo == null && admin == null) {
-			return "No se encontró";
-		} try {
-            // Definir fechas quemadas
-            SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
-            Date fecha_inicio = formato.parse("03/15/2025");
-            Date fecha_fin = formato.parse("03/20/2025");
-            Date fecha_devolucion = formato.parse("03/21/2025");
+	@PostMapping("/guardar")
+	public ResponseEntity<?> guardarSolicitud(@RequestBody SolicitudAlquiler solicitud) {
+	    // Buscar el usuario en la base de datos
+	    Usuario usuario = repositorioU.findById(solicitud.getId_usuario().getIdentificacion()).orElse(null);
+	    if (usuario == null) {
+	        return ResponseEntity.badRequest().body("El usuario no existe");
+	    }
 
-            // Crear la solicitud
-            SolicitudAlquiler soli = new SolicitudAlquiler(
-                usuario, vehiculo, admin, 
-                fecha_inicio, fecha_fin, fecha_devolucion, 
-                50000, 10000, "disponible"
-            );
+	    // Buscar el vehículo en la base de datos
+	    Vehiculo vehiculo = repositorioV.findById(solicitud.getId_placa().getPlaca()).orElse(null);
+	    if (vehiculo == null) {
+	        return ResponseEntity.badRequest().body("El vehículo no existe");
+	    }
 
-            // Guardar en la base de datos
-            repositorioS.save(soli);
+	    // Buscar al administrador
+	    Administrador admin = repositorioA.findById(1L).orElse(null);
+	    if (admin == null) {
+	        return ResponseEntity.badRequest().body("Administrador no encontrado");
+	    }
 
-            return "Solicitud de alquiler guardada con éxito";
+	    // Validar fechas
+	    if (solicitud.getFecha_inicio() == null || solicitud.getFecha_fin() == null) {
+	        return ResponseEntity.badRequest().body("Las fechas de inicio y fin son obligatorias");
+	    }
+	    if (solicitud.getFecha_inicio().after(solicitud.getFecha_fin())) {
+	        return ResponseEntity.badRequest().body("La fecha de inicio no puede ser posterior a la fecha de fin");
+	    }
 
-        } catch (ParseException e) {
-            return "Error al convertir las fechas";
-        }
-    }
+	    // Calcular el valor del alquiler
+	    int valorBase = 50000;  // Valor estándar de alquiler
+	    int valorExtra = 0;  // Por si hay recargos
+
+	    // Crear la solicitud de alquiler
+	    SolicitudAlquiler nuevaSolicitud = new SolicitudAlquiler(
+	        usuario,
+	        vehiculo,
+	        admin,
+	        solicitud.getFecha_inicio(),
+	        solicitud.getFecha_fin(),
+	        null, // La fecha de devolución será null hasta que se entregue el vehículo
+	        valorBase,
+	        valorExtra,
+	        "pendiente"
+	    );
+
+	    // Guardar en la base de datos
+	    SolicitudAlquiler solicitudGuardada = repositorioS.save(nuevaSolicitud);
+
+	    // Retornar la solicitud guardada en formato JSON
+	    return ResponseEntity.ok(solicitudGuardada);
+	}
+
 	
 	
 
