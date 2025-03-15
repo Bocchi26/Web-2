@@ -1,1 +1,79 @@
-<p>alquiler works!</p>
+<div class="container mt-4">
+  <h2 class="text-center">Filtrar Vehículos</h2>
+
+  <!-- Filtro de vehículos -->
+  <div class="d-flex justify-content-center mb-3">
+    <label for="tipo" class="me-2 align-self-center">Seleccione un tipo de vehículo:</label>
+    <select id="tipo" [(ngModel)]="tipoSeleccionado" class="form-select w-auto">
+      <option *ngFor="let tipo of tiposVehiculos" [value]="tipo">{{ tipo }}</option>
+    </select>
+    <button class="btn btn-primary ms-2" (click)="filtrarVehiculos()">Filtrar</button>
+  </div>
+
+  <!-- Tabla de vehículos -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Placa</th>
+          <th>Tipo</th>
+          <th>Color</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehiculo of vehiculosPaginados" 
+            (click)="seleccionarVehiculo(vehiculo)" 
+            [class.seleccionado]="vehiculo === vehiculoSeleccionado">
+          <td>{{ vehiculo.placa }}</td>
+          <td>{{ vehiculo.tipo }}</td>
+          <td>{{ vehiculo.color }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <nav *ngIf="vehiculos.length > 10">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="paginaActual === 1">
+        <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</button>
+      </li>
+      <li class="page-item" *ngFor="let pagina of totalPaginas; let i = index" [class.active]="paginaActual === i + 1">
+        <button class="page-link" (click)="cambiarPagina(i + 1)">{{ i + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="paginaActual === totalPaginas.length || totalPaginas.length === 0">
+        <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Botón de selección -->
+ <!-- Botón de selección -->
+<div class="text-center mt-3">
+  <button class="btn btn-success" 
+          [disabled]="!vehiculoSeleccionado" 
+          (click)="confirmarSeleccion()">
+    Seleccionar
+  </button>
+</div>
+
+
+<!-- Modal de Alquiler -->
+<div *ngIf="mostrarModal" class="modal">
+  <div class="modal-contenido">
+    <button class="cerrar-modal" (click)="cerrarModal()">×</button>
+    <h3>Confirmar Alquiler</h3>
+
+    <p><strong>Vehículo:</strong> {{ vehiculoSeleccionado?.placa }}</p>
+    <p><strong>Tipo:</strong> {{ vehiculoSeleccionado?.tipo }}</p>
+
+    <label>Fecha de inicio:</label>
+    <input type="date" [(ngModel)]="fechaInicio" required [min]="obtenerFechaActual()"/>
+
+    <label>Fecha de fin:</label>
+    <input type="date" [(ngModel)]="fechaFin" required [min]="fechaInicio || obtenerFechaActual()"/>
+
+    <button class="btn btn-primary" (click)="confirmarAlquiler()">Confirmar</button>
+    <button class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+  </div>
+</div>

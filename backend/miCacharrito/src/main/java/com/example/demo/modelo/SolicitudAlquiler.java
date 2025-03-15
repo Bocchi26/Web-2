@@ -44,7 +44,7 @@ public class SolicitudAlquiler {
 	private Date fecha_fin;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Column(name="fecha_devolucion", nullable=false)
+	@Column(name="fecha_devolucion", nullable=true)
 	private Date fecha_devolucion;
 	
 	@Column(name="valor")
