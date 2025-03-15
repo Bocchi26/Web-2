@@ -2,7 +2,8 @@ package com.example.demo.controlador;
 
 
 import java.util.List;
-import java.util.Map;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,21 +41,7 @@ public class UsuarioControlador {
 	        return this.repositorioU.findAll(); // Devolver todos los usuarios
 	    }
 	 
-	 @PostMapping("loginUsuario")
-	 public boolean Login(@RequestBody Map<String, String> objecttype) {
-		 
-		 Long identificacion = Long.parseLong(objecttype.get("identificacion"));
-		 String password = objecttype.get("password");
-		 
-		 
-		 Usuario usu = repositorioU.findById(identificacion).orElse(null);
-		 
-		 
-		 if(usu != null && password.equals(usu.getPassword())) {
-			 return true;
-		 }
-		 return false;
-	 } 
+
 	 
 	 
 	

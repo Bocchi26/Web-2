@@ -2,6 +2,8 @@ package com.example.demo.modelo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,13 +35,16 @@ public class SolicitudAlquiler {
 	@JoinColumn(name="id_administrador", referencedColumnName="id_administrador", nullable=false)
 	private Administrador id_administrador;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_inicio", nullable=false)
 	private Date fecha_inicio;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="fecha_fin", nullable=false)
 	private Date fecha_fin;
 	
-	@Column(name="fecha_devolucion", nullable=false)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Column(name="fecha_devolucion", nullable=true)
 	private Date fecha_devolucion;
 	
 	@Column(name="valor")

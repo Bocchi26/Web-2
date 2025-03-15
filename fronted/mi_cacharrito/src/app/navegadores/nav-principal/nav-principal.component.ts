@@ -11,69 +11,65 @@ import { AuthService } from '../../servicios/rol/auth.service';
   styleUrl: './nav-principal.component.css'
 })
 export class NavPrincipalComponent implements OnInit {
-    rolActual: string = 'inicio'; // Estado inicial
+  rolActual: string = 'inicio'; // Estado inicial
 
-    constructor(private router: Router,  private authService: AuthService) {}
-    ngOnInit() {
-      this.authService.rol$.subscribe(rol => {
-        this.rolActual = rol;
-      });
-    }
-    seleccionarUsuario() {
-      this.rolActual = 'usuario-no-logueado'; // Cambia al estado de usuario no logueado
-    }
+  constructor(private router: Router, private authService: AuthService) {}
 
-    seleccionarAdministrador() {
-      this.rolActual = 'admin-no-logueado';
-      this.mostrarLoginAdministrador(); // Cambia al estado de administrador no logueado
-    }
+  ngOnInit() {
+    this.authService.rol$.subscribe(rol => {
+      this.rolActual = rol;
+    });
+  }
 
-    mostrarRegistro() {
-      this.router.navigate(['/registro']); // Redirige al componente de registro
-    }
+  seleccionarUsuario() {
+    this.authService.actualizarRol('usuario-no-logueado');
+  }
 
-    mostrarLoginUsuario() {
-      this.router.navigate(['/login-usuario']); // Redirige al componente de login de usuario
-    }
+  seleccionarAdministrador() {
+    this.authService.actualizarRol('admin-no-logueado');
+    this.mostrarLoginAdministrador();
+  }
 
-    mostrarLoginAdministrador() {
-      this.router.navigate(['/login-administrador']); // Redirige al componente de login de administrador
-    }
+  mostrarRegistro() {
+    this.router.navigate(['/registro']);
+  }
 
-    iniciarSesionComoUsuario() {
-      this.rolActual = 'usuario-logueado'; // Cambia al estado de usuario logueado
-      this.router.navigate(['/usuario']); // Redirige al área de usuario
-    }
+  mostrarLoginUsuario() {
+    this.router.navigate(['/login-usuario']);
+  }
 
-    iniciarSesionComoAdmin() {
-      this.rolActual = 'admin-logueado'; // Cambia al estado de administrador logueado
-      this.router.navigate(['/admin']); // Redirige al área de administrador
-    }
+  mostrarLoginAdministrador() {
+    this.router.navigate(['/login-administrador']);
+  }
 
-    cerrarSesion() {
-       
-      this.authService.cerrarSesion(); // Cambia el estado al inicial
-  console.log('Redirigiendo a la raíz...');
-  this.router.navigate(['/']).then(() => {
-    console.log('Redirección completada.');
-  }).catch((error) => {
-    console.error('Error en la redirección:', error);
-  }); // Ahora usa el método centralizado// Redirige a la página de inicio
-    }
+  iniciarSesionComoUsuario() {
+    this.authService.actualizarRol('usuario-logueado'); // ✅ Usa AuthService
+    this.router.navigate(['/usuario']);
+  }
 
-    irAlquiler() {
-      this.router.navigate(['/alquiler']); // Redirige al componente de alquiler
-    }
+  iniciarSesionComoAdmin() {
+    this.authService.actualizarRol('admin-logueado'); // ✅ Usa AuthService
+    this.router.navigate(['/admin']);
+  }
 
-    irCancelarAlquiler() {
-      this.router.navigate(['/cancelar-alquiler']); // Redirige al componente de cancelar alquiler
-    }
+  cerrarSesion() {
+    this.authService.cerrarSesion(); // ✅ Usa AuthService
+    this.router.navigate(['/']); // ✅ Redirige a la página de inicio
+  }
 
-    verListados() {
-      this.router.navigate(['/listados']); // Redirige al componente de listados
-    }
+  irAlquiler() {
+    this.router.navigate(['/alquiler']);
+  }
 
-    cambiarEstado() {
-      this.router.navigate(['/cambiar-estado']); // Redirige al componente de cambiar estado
-    }
+  irCancelarAlquiler() {
+    this.router.navigate(['/cancelar-alquiler']);
+  }
+
+  verListados() {
+    this.router.navigate(['/listados']);
+  }
+
+  cambiarEstado() {
+    this.router.navigate(['/cambiar-estado']);
+  }
 }
