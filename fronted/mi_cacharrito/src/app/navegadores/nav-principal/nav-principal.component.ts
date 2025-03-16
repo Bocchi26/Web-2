@@ -12,12 +12,14 @@ import { AuthService } from '../../servicios/rol/auth.service';
 })
 export class NavPrincipalComponent implements OnInit {
   rolActual: string = 'inicio'; // Estado inicial
+   // Debug
 
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.authService.rol$.subscribe(rol => {
       this.rolActual = rol;
+      console.log('📌 Rol actual:', this.rolActual);
     });
   }
 

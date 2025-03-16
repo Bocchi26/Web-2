@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../../servicios/usuario.service';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -14,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup; 
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) { }
+  constructor(private fb: FormBuilder, private router: Router, private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.registroForm = this.fb.group({ 
@@ -48,6 +49,7 @@ export class RegistroComponent implements OnInit {
           console.log('✅ Usuario registrado:', response);
           alert('Registro exitoso');
           this.registroForm.reset();
+          this.router.navigate(['/login-usuario']);
         },
         error: (error) => {
           console.error('❌ Error en el registro:', error);

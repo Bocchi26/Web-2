@@ -8,6 +8,7 @@ import { CancelaralquilerComponent } from './componentes/usuario/cancelaralquile
 
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { NavPrincipalComponent } from './navegadores/nav-principal/nav-principal.component';
+import { AdministradorComponent } from './componentes/administrador/administrador.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,8 @@ export const routes: Routes = [
         { path: 'login-usuario', component: LoginusuarioComponent },
         { path: 'login-administrador', component: LoginadministradorComponent },
         { path: 'alquiler', component: AlquilerComponent },
-        { path: 'cancelar-alquiler', component: CancelaralquilerComponent }
+        { path: 'cancelar-alquiler', component: CancelaralquilerComponent }, 
+        { path: 'admin', component: AdministradorComponent}
     ]
 }
 ];
