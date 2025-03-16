@@ -101,10 +101,13 @@ export class AlquilerComponent {
           console.log('✅ Solicitud registrada:', solicitudGuardada);
           this.mostrarModal = false;
           this.generarPDF(solicitudGuardada);
+          this.filtrarVehiculos();
+          alert('Solicitud de alquiler registrada con éxito.');
         },
         error: (error) => {
           console.error('❌ Error al registrar la solicitud:', error);
-          alert('Hubo un problema al registrar la solicitud. Inténtelo de nuevo.');
+           // Si el backend envía un mensaje, mostrarlo en el alert
+          
         }
       });
   
@@ -120,18 +123,20 @@ export class AlquilerComponent {
       alert('Error: No se puede generar el PDF. Datos incompletos.');
       return;
     }
-
+  
     const doc = new jsPDF();
-
+  
     doc.text('Detalles de la Solicitud de Alquiler', 10, 10);
     doc.text(`Número: ${solicitud.numero_alquiler}`, 10, 20);
-    doc.text(`Usuario: ${solicitud.id_usuario.identificacion}`, 10, 30);
-    doc.text(`Vehículo: ${solicitud.id_placa.placa}`, 10, 40);
-    doc.text(`Fecha Inicio: ${solicitud.fecha_inicio}`, 10, 50);
-    doc.text(`Fecha Fin: ${solicitud.fecha_fin}`, 10, 60);
-    doc.text(`Estado: ${solicitud.estado_alquiler || 'Desconocido'}`, 10, 70);
-    doc.text(`Valor: ${solicitud.valor || 'No especificado'}`, 10, 80);
-
+    doc.text(`Nombre del Usuario: ${solicitud.usuario}`, 10, 30);  // Aquí se incluye el nombre del usuario
+    doc.text(`Vehículo: ${solicitud.vehiculo.placa}`, 10, 40);
+    doc.text(`Tipo: ${solicitud.vehiculo.tipo}`, 10, 50);
+    doc.text(`Color: ${solicitud.vehiculo.color}`, 10, 60);
+    doc.text(`Fecha Inicio: ${solicitud.fecha_inicio}`, 10, 70);
+    doc.text(`Fecha Fin: ${solicitud.fecha_fin}`, 10, 80);
+    doc.text(`Estado: ${solicitud.estado_alquiler || 'Desconocido'}`, 10, 90);
+    doc.text(`Valor: ${solicitud.valor || 'No especificado'}`, 10, 100);
+  
     doc.save(`Solicitud_Alquiler_${solicitud.numero_alquiler}.pdf`);
   }
 

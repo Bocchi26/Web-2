@@ -1,1 +1,46 @@
-<p>cancelaralquiler works!</p>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Detalles del Vehículo</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alquiler of alquileresPaginados; let i = index" 
+            (click)="seleccionarAlquiler(alquiler)" 
+            [class.seleccionado]="alquiler === alquilerSeleccionado">
+          <td>{{ (paginaActual - 1) * itemsPorPagina + i + 1 }}</td>
+          <td>{{ alquiler.id_placa.placa }} - {{ alquiler.id_placa.tipo }} ({{ alquiler.id_placa.color }})</td>
+          <td>{{ alquiler.fecha_inicio }}</td>
+          <td>{{ alquiler.fecha_fin }}</td>
+        </tr>
+      </tbody>
+      
+    </table>
+  
+    <nav *ngIf="alquileres.length > 10">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="paginaActual === 1">
+            <button class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</button>
+          </li>
+          <li class="page-item" *ngFor="let pagina of totalPaginas; let i = index" [class.active]="paginaActual === i + 1">
+            <button class="page-link" (click)="cambiarPagina(i + 1)">{{ i + 1 }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="paginaActual === totalPaginas.length || totalPaginas.length === 0">
+            <button class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</button>
+          </li>
+        </ul>
+      </nav>
+    <div class="text-center mt-3">
+    <button 
+      (click)="seleccionarAlquiler(alquilerSeleccionado); cancelarAlquiler()"
+      [disabled]="!alquilerSeleccionado" 
+      class="btn btn-danger cancelar-btn">|
+      Cancelar Alquiler
+    </button>
+    </div>
+  </div>
+  
