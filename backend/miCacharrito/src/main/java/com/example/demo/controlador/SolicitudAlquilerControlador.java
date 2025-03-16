@@ -3,14 +3,19 @@ package com.example.demo.controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repositorio.AdministradorRepositorio;
@@ -67,8 +72,30 @@ public class SolicitudAlquilerControlador {
 	    }
 
 	    // Calcular el valor del alquiler
-	    int valorBase = 50000;  // Valor estándar de alquiler
-	    int valorExtra = 0;  // Por si hay recargos
+	    int valorBase;
+	    switch (vehiculo.getTipo()) {
+	        case "Motocicleta":
+	            valorBase = 30000;
+	            break;
+	        case "Automóvil":
+	            valorBase = 50000;
+	            break;
+	        case "Camioneta":
+	            valorBase = 70000;
+	            break;
+	        case "Campero":
+	            valorBase = 75000;
+	            break;
+	        case "Microbús":
+	            valorBase = 90000;
+	            break;
+	        default:
+	            return ResponseEntity.badRequest().body("Tipo de vehículo no reconocido");
+	    }
+
+	    // Calcular la cantidad de días del alquiler
+	    int diasAlquiler = (int) ((solicitud.getFecha_fin().getTime() - solicitud.getFecha_inicio().getTime()) / (1000 * 60 * 60 * 24));
+	    int valorTotal = valorBase * Math.max(diasAlquiler, 1);
 
 	    // Crear la solicitud de alquiler
 	    SolicitudAlquiler nuevaSolicitud = new SolicitudAlquiler(
@@ -77,21 +104,50 @@ public class SolicitudAlquilerControlador {
 	        admin,
 	        solicitud.getFecha_inicio(),
 	        solicitud.getFecha_fin(),
-	        null, // La fecha de devolución será null hasta que se entregue el vehículo
 	        valorBase,
-	        valorExtra,
 	        "pendiente"
 	    );
 
 	    // Guardar en la base de datos
 	    SolicitudAlquiler solicitudGuardada = repositorioS.save(nuevaSolicitud);
 
-	    // Retornar la solicitud guardada en formato JSON
-	    return ResponseEntity.ok(solicitudGuardada);
+	 // **FORMATEAR FECHAS**
+	    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+	    String fechaInicioFormateada = formatoFecha.format(solicitudGuardada.getFecha_inicio());
+	    String fechaFinFormateada = formatoFecha.format(solicitudGuardada.getFecha_fin());
+
+	    // **RESPUESTA**
+	    Map<String, Object> respuesta = new HashMap<>();
+	    respuesta.put("numero_alquiler", solicitudGuardada.getNumero_alquiler());
+	    respuesta.put("usuario", usuario.getNombre_completo());
+	    respuesta.put("vehiculo", Map.of(
+	        "placa", vehiculo.getPlaca(),
+	        "tipo", vehiculo.getTipo(),
+	        "color", vehiculo.getColor()
+	    ));
+	    respuesta.put("fecha_inicio", fechaInicioFormateada);  // **FECHA FORMATEADA**
+	    respuesta.put("fecha_fin", fechaFinFormateada);        // **FECHA FORMATEADA**
+	    respuesta.put("estado_alquiler", solicitudGuardada.getEstado_alquiler());
+	    respuesta.put("valor", solicitudGuardada.getValor());
+
+	    return ResponseEntity.ok(respuesta);
 	}
 
-	
-	
+	 // Obtener alquileres por usuario
+    @GetMapping("/alquilaerUsuario")
+    public ResponseEntity<List<SolicitudAlquiler>> obtenerAlquileresPorUsuario(@RequestParam String identificacion) {
+        List<SolicitudAlquiler> alquileres = repositorioS.alquileresDeUsuario(identificacion);
+        return ResponseEntity.ok(alquileres);
+    }
 
-
+    // Cancelar alquiler con RequestParam
+    @DeleteMapping("/cancelarAlquiler")
+    public ResponseEntity<String> cancelarAlquiler(@RequestParam Long id) {
+        if (repositorioS.existsById(id)) {
+            repositorioS.deleteById(id);
+            return ResponseEntity.ok("Alquiler cancelado exitosamente.");
+        } else {
+            return ResponseEntity.badRequest().body("El alquiler no existe.");
+        }
+    }
 }

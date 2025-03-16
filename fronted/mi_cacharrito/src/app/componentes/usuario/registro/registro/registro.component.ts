@@ -17,11 +17,11 @@ export class RegistroComponent implements OnInit{
   ngOnInit(): void {
     this.registroForm = this.fb.group({ 
       identificacion: ['', Validators.required],
-      nombre_completo: ['', Validators.required],  //  Coincide con el backend
-      fecha_expedicion_licencia: ['', Validators.required],  //  Coincide con el backend
+      nombre_completo: ['', Validators.required], 
+      fecha_expedicion_licencia: ['', Validators.required],  
       categoria: ['', Validators.required],
       vigencia: ['', [Validators.required, Validators.min(1)]],
-      correo_electronico: ['', [Validators.required, Validators.email]],  //  Coincide con el backend
+      correo_electronico: ['', [Validators.required, Validators.email]],  
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });  

@@ -43,15 +43,8 @@ public class SolicitudAlquiler {
 	@Column(name="fecha_fin", nullable=false)
 	private Date fecha_fin;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	@Column(name="fecha_devolucion", nullable=true)
-	private Date fecha_devolucion;
-	
 	@Column(name="valor")
 	private int valor;
-	
-	@Column(name="valor_extra")
-	private int valor_extra;
 	
 	@Column(name="estado_alquiler")
 	private String estado_alquiler;
@@ -62,16 +55,14 @@ public class SolicitudAlquiler {
 	}
 
 	public SolicitudAlquiler(Usuario id_usuario, Vehiculo id_placa, Administrador id_administrador, Date fecha_inicio,
-			Date fecha_fin, Date fecha_devolucion, int valor, int valor_extra, String estado_alquiler) {
+			Date fecha_fin, int valor, String estado_alquiler) {
 		super();
 		this.id_usuario = id_usuario;
 		this.id_placa = id_placa;
 		this.id_administrador = id_administrador;
 		this.fecha_inicio = fecha_inicio;
 		this.fecha_fin = fecha_fin;
-		this.fecha_devolucion = fecha_devolucion;
 		this.valor = valor;
-		this.valor_extra = valor_extra;
 		this.estado_alquiler = estado_alquiler;
 	}
 
@@ -119,14 +110,6 @@ public class SolicitudAlquiler {
 		this.fecha_fin = fecha_fin;
 	}
 
-	public Date getFecha_devolucion() {
-		return fecha_devolucion;
-	}
-
-	public void setFecha_devolucion(Date fecha_devolucion) {
-		this.fecha_devolucion = fecha_devolucion;
-	}
-
 	public int getValor() {
 		return valor;
 	}
@@ -135,13 +118,6 @@ public class SolicitudAlquiler {
 		this.valor = valor;
 	}
 
-	public int getValor_extra() {
-		return valor_extra;
-	}
-
-	public void setValor_extra(int valor_extra) {
-		this.valor_extra = valor_extra;
-	}
 
 	public String getEstado_alquiler() {
 		return estado_alquiler;

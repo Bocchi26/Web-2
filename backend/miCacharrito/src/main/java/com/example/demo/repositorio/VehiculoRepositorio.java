@@ -1,5 +1,6 @@
 package com.example.demo.repositorio;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,5 @@ public interface VehiculoRepositorio extends JpaRepository<Vehiculo, String> {
 		       "AND (sa IS NULL OR sa.estado_alquiler = 'disponible') " +
 		       "ORDER BY v.tipo")
 		List<Vehiculo> TipoDisponible(String tipo);
+	 
 }
