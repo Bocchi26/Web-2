@@ -1,7 +1,8 @@
 package com.example.demo.controlador;
 
 
-import java.util.List;
+import java.text.ParseException;
+
 
 
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -33,12 +35,16 @@ public class UsuarioControlador {
 	
 	
 	 @PostMapping("/registroUsuario")
-	    public List<Usuario> registroDelUsuario(@RequestBody Usuario usuario) {
-	        this.repositorioU.save(usuario); // Guardar el usuario en la BD
-	        String password = usuario.getPassword();
-	        Login log = new Login(password,usuario);
-	        this.repositorioL.save(log);
-	        return this.repositorioU.findAll(); // Devolver todos los usuarios
+	    public Usuario registroDelUsuario(@RequestParam String password,
+	    		@RequestBody Usuario usuario)throws ParseException{
+		 
+	        repositorioU.save(usuario); // Guardar el usuario en la BD
+	         
+	        Login log = new Login(password, usuario);
+	        repositorioL.save(log);
+	        
+	        return usuario;
+
 	    }
 	 
 

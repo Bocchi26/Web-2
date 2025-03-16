@@ -9,7 +9,6 @@ import com.example.demo.modelo.Usuario;
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>{
 	
-	public List <Usuario> findByPassword(String password);
 	
 	
 
