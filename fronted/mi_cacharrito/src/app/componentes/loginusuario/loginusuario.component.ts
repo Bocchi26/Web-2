@@ -31,10 +31,10 @@ ngOnInit(): void {
 
 onSubmit() {
   if (this.IniciodeSesionForm.valid) {
-    const identificacion = this.IniciodeSesionForm.value.identificacion.toString();
+    const identificacion = Number(this.IniciodeSesionForm.value.identificacion); // Convertir a número
     const password = this.IniciodeSesionForm.value.password;
 
-    console.log('📌 Intentando iniciar sesión con:', this.IniciodeSesionForm.value);
+    console.log('📌 Intentando iniciar sesión con:', { identificacion, password });
 
     this.loginusuarioService.loginUsuario(identificacion, password).subscribe({
       next: (response) => {
@@ -43,8 +43,8 @@ onSubmit() {
         if (response === true) {  // ✅ Verificar si la respuesta es `true`
           console.log('✅ Inicio de sesión exitoso');
           alert('Inicio de sesión exitoso');
-          this.authService.actualizarRol('usuario-logueado'); // ✅ Guarda el rol
-          this.authService.guardarUsuario(identificacion); // ✅ Guarda la identificación
+          this.authService.actualizarRol('usuario-logueado');
+          this.authService.guardarUsuario(identificacion.toString());
           this.router.navigate(['/alquiler']);
         } else {
           console.warn('⚠️ Credenciales incorrectas');

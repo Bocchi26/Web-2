@@ -36,8 +36,7 @@ public class Usuario {
 	@Column(name="telefono")
 	private long telefono;
 	
-	@Column(name="password")
-	private String password;
+
 
 	public Usuario() {
 		super();
@@ -45,7 +44,7 @@ public class Usuario {
 	}
 
 	public Usuario(long identificacion, String nombre_completo, Date fecha_expedicion_licencia, String categoria,
-			int vigencia, String correo_electronico, long telefono, String password) {
+			int vigencia, String correo_electronico, long telefono) {
 		super();
 		this.identificacion = identificacion;
 		this.nombre_completo = nombre_completo;
@@ -54,7 +53,6 @@ public class Usuario {
 		this.vigencia = vigencia;
 		this.correo_electronico = correo_electronico;
 		this.telefono = telefono;
-		this.password = password;
 	}
 
 	public long getIdentificacion() {
@@ -113,13 +111,7 @@ public class Usuario {
 		this.telefono = telefono;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	
 	
 }
