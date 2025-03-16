@@ -2,6 +2,8 @@ import { AdministradorService } from './../../servicios/administrador.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../servicios/rol/auth.service';
 
 @Component({
   selector: 'app-loginadministrador',
@@ -16,7 +18,7 @@ export class LoginadministradorComponent implements OnInit {
 
 @Output() loginExitosoAdmin = new EventEmitter<void>();
 IniciodeSesionAdminForm: FormGroup<any>;
-constructor(private fb: FormBuilder, private administradorService: AdministradorService ) { }
+constructor(private fb: FormBuilder, private router : Router, private administradorService: AdministradorService, private authService: AuthService) { }
 
 
 ngOnInit(): void {
@@ -41,6 +43,8 @@ onSubmit() {
         console.log('✅ Inicio de sesión exitoso:', response);
         alert('Inicio de sesión exitoso');
         this.loginExitosoAdmin.emit();
+        this.authService.actualizarRol('admin-logueado');
+        this.router.navigate(['/admin']);
 
       },
       error: (error) => {

@@ -22,7 +22,7 @@ public class Login {
 
 	    @OneToOne
 	    @JoinColumn(name = "identificacion", referencedColumnName = "identificacion", nullable = false)
-	    private Usuario id_usuario;
+	    private Usuario idUsuario;
 	    
 	    
 
@@ -33,22 +33,10 @@ public class Login {
 
 
 
-		public Login( String password, Usuario id_usuario) {
+		public Login(String password, Usuario idUsuario) {
 			super();
 			this.password = password;
-			this.id_usuario = id_usuario;
-		}
-
-
-
-		public Long getId() {
-			return id;
-		}
-
-
-
-		public void setId(Long id) {
-			this.id = id;
+			this.idUsuario = idUsuario;
 		}
 
 
@@ -65,16 +53,19 @@ public class Login {
 
 
 
-		public Usuario getId_usuario() {
-			return id_usuario;
+		public Usuario getIdUsuario() {
+			return idUsuario;
 		}
 
 
 
-		public void setId_usuario(Usuario id_usuario) {
-			this.id_usuario = id_usuario;
+		public void setIdUsuario(Usuario idUsuario) {
+			this.idUsuario = idUsuario;
 		}
-	    
+
+
+
+		
 	    
 
 }

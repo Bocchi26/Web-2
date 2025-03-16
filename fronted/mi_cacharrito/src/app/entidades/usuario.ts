@@ -6,5 +6,4 @@ export class Usuario {
     vigencia: number;
     correo_electronico: string;
     telefeno: number;
-    password: string;
 }
