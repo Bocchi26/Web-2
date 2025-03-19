@@ -68,10 +68,14 @@ export class NavPrincipalComponent implements OnInit {
   }
 
   verListados() {
-    this.router.navigate(['/listados']);
+    this.router.navigate(['/admin']);
   }
 
   cambiarEstado() {
     this.router.navigate(['/cambiar-estado']);
+  }
+
+  fechaEntrega() {
+    this.router.navigate(['/fecha-entrega']);
   }
 }

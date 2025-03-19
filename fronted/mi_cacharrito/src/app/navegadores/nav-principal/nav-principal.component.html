@@ -34,12 +34,16 @@
         </li>
 
         <!-- Administrador no logueado -->
+
         <!-- Administrador logueado -->
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="verListados()">Ver Listados</a>
         </li>
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="cambiarEstado()">Cambiar Estado</a>
+        </li>
+        <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
+          <a class="nav-link" (click)="fechaEntrega()">Fecha Entrega</a>
         </li>
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="cerrarSesion()">Cerrar Sesión</a>

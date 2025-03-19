@@ -1,4 +1,5 @@
 export class SolicitudAlquiler {
+  numero_alquiler: number; // Número de alquiler
   id_usuario: string; // Identificación del usuario
   id_placa: string; // Placa del vehículo
   id_administrador: string; // ID del administrador que aprueba el alquiler

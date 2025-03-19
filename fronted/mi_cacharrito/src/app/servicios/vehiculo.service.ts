@@ -16,4 +16,10 @@ export class VehiculoService {
     return this.httpclient.post<Vehiculo[]>(`${this.URL}?tipo=${tipo}`, {});	
   }
 
+
+  private apiUrl = 'http://localhost:8080/ver/vehiculo/pendientes';
+ obtenerVehiculosPendientes(): Observable<any[]> {
+  return this.httpclient.get<any[]>(`${this.apiUrl}`);
+}
+
 }

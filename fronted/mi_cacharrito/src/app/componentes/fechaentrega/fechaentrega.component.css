@@ -1,0 +1,6 @@
+/* Resaltar la fila seleccionada */
+.seleccionado {
+    font-weight: bold;
+    background-color: #f0f8ff; /* Color de fondo suave */
+    color: #000; /* Color del texto */
+}

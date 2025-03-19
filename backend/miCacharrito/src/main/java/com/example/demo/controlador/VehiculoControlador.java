@@ -1,6 +1,9 @@
 package com.example.demo.controlador;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,4 +41,21 @@ public class VehiculoControlador {
 		
         return repositorioV.TipoDisponible(tipo);
     }
+	
+	@GetMapping("/pendientes")
+	public List<Map<String, String>> obtenerVehiculosPendientes() {
+	    List<Object[]> resultados = repositorioV.VehiculosPendientes();
+	    List<Map<String, String>> vehiculos = new ArrayList<>();
+
+	    for (Object[] obj : resultados) {
+	        Map<String, String> vehiculo = new HashMap<>();
+	        vehiculo.put("placa", obj[0].toString());
+	        vehiculo.put("tipo", obj[1].toString());
+	        vehiculo.put("color", obj[2].toString());
+	        vehiculos.add(vehiculo);
+	    }
+	    return vehiculos;
+	}
+	
+
 }
