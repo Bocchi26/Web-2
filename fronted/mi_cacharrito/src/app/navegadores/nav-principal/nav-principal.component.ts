@@ -22,7 +22,12 @@ export class NavPrincipalComponent implements OnInit {
       console.log('📌 Rol actual:', this.rolActual);
     });
   }
+  
+  volverInicio(){
+    this.authService.actualizarRol('inicio');
+    this.router.navigate(['/']);
 
+  }
   seleccionarUsuario() {
     this.authService.actualizarRol('usuario-no-logueado');
   }

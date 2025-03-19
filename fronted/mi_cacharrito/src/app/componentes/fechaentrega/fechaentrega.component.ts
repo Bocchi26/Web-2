@@ -27,13 +27,14 @@ export class FechaentregaComponent {
   }
 
   verificarDevolucion(): void {
-    const numeroAlquiler = this.verificarDevolucionForm.get('numeroAlquiler')?.value;
-    const fechaDevolucion = this.verificarDevolucionForm.get('fechaDevolucion')?.value;
+    let numeroAlquiler = this.verificarDevolucionForm.get('numeroAlquiler')?.value;
+    let fechaDevolucion = this.verificarDevolucionForm.get('fechaDevolucion')?.value;
 
     this.administradorService.verificarDevolucion(numeroAlquiler, fechaDevolucion).subscribe(
       (data) => {
         this.alquiler = data;  // Los datos de la solicitud de alquiler
         console.log('Datos de alquiler:', this.alquiler);
+        this.verificarDevolucionForm.reset();  // Limpiar formulario
       },
       (error) => {
         alert('Error al verificar la devolución.');
