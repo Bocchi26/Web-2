@@ -6,6 +6,14 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
+
+        <!--volver-->
+        <li class="nav-item" *ngIf="rolActual === 'usuario-no-logueado'">
+          <a class="nav-link" (click)="volverInicio()">Volver</a>
+        </li>
+        <li class="nav-item" *ngIf="rolActual === 'admin-no-logueado'">
+          <a class="nav-link" (click)="volverInicio()">Volver</a>
+        </li>
         <!-- Estado inicial -->
         <li class="nav-item" *ngIf="rolActual === 'inicio'">
           <a class="nav-link" (click)="seleccionarUsuario()">Usuario</a>
@@ -34,12 +42,16 @@
         </li>
 
         <!-- Administrador no logueado -->
+
         <!-- Administrador logueado -->
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="verListados()">Ver Listados</a>
         </li>
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="cambiarEstado()">Cambiar Estado</a>
+        </li>
+        <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
+          <a class="nav-link" (click)="fechaEntrega()">Fecha Entrega</a>
         </li>
         <li class="nav-item" *ngIf="rolActual === 'admin-logueado'">
           <a class="nav-link" (click)="cerrarSesion()">Cerrar Sesión</a>

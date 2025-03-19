@@ -1,0 +1,57 @@
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Verificar Devolución</h2>
+
+    <!-- Formulario de verificación de devolución -->
+    <form [formGroup]="verificarDevolucionForm" class="p-4 border rounded shadow">
+        <div class="mb-3">
+            <label for="numeroAlquiler" class="form-label">Ingrese el número del alquiler:</label>
+            <input id="numeroAlquiler" formControlName="numeroAlquiler" type="number" class="form-control" placeholder="Número de alquiler">
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaDevolucion" class="form-label">Ingrese la fecha de devolución:</label>
+            <input id="fechaDevolucion" formControlName="fechaDevolucion" type="date" class="form-control" [min]="obtenerFechaActual()">
+        </div>
+
+        <button type="button" class="btn btn-primary w-100 mb-3" (click)="verificarDevolucion()">Verificar Devolución</button>
+    </form>
+
+    <!-- Mostrar tabla con los datos del alquiler -->
+    <div *ngIf="alquiler" class="table-responsive mt-4">
+        <h3>Detalles del Alquiler</h3>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Número de Alquiler</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Valor</th>
+                    <th>Valor Extra</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr 
+                    (click)="seleccionarAlquiler(alquiler)" 
+                    [ngClass]="{'seleccionado': alquiler === alquilerSeleccionado}">
+                    <td>{{ alquiler.numero_alquiler }}</td>
+                    <td>{{ alquiler.fecha_inicio }}</td>
+                    <td>{{ alquiler.fecha_fin }}</td>
+                    <td>{{ alquiler.valor }}</td>
+                    <td>{{ alquiler.valor_extra || 'No aplica' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón para eliminar el alquiler -->
+    <div class="text-center mt-3">
+        <button 
+            (click)="eliminarAlquiler()"
+            [disabled]="!alquilerSeleccionado" 
+            class="btn btn-danger">
+            Eliminar Alquiler
+        </button>
+    </div>
+</div>

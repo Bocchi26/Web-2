@@ -22,7 +22,12 @@ export class NavPrincipalComponent implements OnInit {
       console.log('📌 Rol actual:', this.rolActual);
     });
   }
+  
+  volverInicio(){
+    this.authService.actualizarRol('inicio');
+    this.router.navigate(['/']);
 
+  }
   seleccionarUsuario() {
     this.authService.actualizarRol('usuario-no-logueado');
   }
@@ -68,10 +73,14 @@ export class NavPrincipalComponent implements OnInit {
   }
 
   verListados() {
-    this.router.navigate(['/listados']);
+    this.router.navigate(['/admin']);
   }
 
   cambiarEstado() {
     this.router.navigate(['/cambiar-estado']);
+  }
+
+  fechaEntrega() {
+    this.router.navigate(['/fecha-entrega']);
   }
 }

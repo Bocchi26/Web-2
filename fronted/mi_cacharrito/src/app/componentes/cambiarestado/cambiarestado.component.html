@@ -1,0 +1,22 @@
+
+<div class="container mt-4">
+  <h1 class="text-center">Cambiar Estado</h1>
+  <form [formGroup]="cambiarestadoForm" class="p-4 border rounded shadow">
+    
+    <!-- Ingresar número de placa -->
+    <div class="mb-3">
+      <label for="placa" class="form-label">Ingresa el número de placa:</label>
+      <input id="placa" formControlName="placa" type="text" class="form-control">
+    </div>
+
+    <!-- Botón para buscar el estado -->
+    <button type="button" class="btn btn-primary w-100 mb-2" (click)="verificarEstado()">Buscar</button>
+
+    <!-- Botón para cambiar el estado (solo si está pendiente) -->
+    <button type="button" class="btn btn-success w-100" (click)="cambiarEstado()" [disabled]="!estadoPendiente">
+      Cambiar Estado
+    </button>
+  </form>
+</div>
+
+
